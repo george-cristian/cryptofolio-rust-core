@@ -1,0 +1,15 @@
+{
+  "name": "Cryptofolio Rust Core",
+  "build": {
+    "dockerfile": "../Dockerfile.dev",
+    "context": "."
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "rust-lang.rust-analyzer",
+        "mutantdino.resourcemonitor"
+      ]
+    }
+  }
+}

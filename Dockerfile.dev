@@ -1,0 +1,20 @@
+# Use the official Rust image as the base
+FROM rust:1.84
+
+# Set the working directory inside the container
+WORKDIR /cryptofolio-core
+
+# Copy the current project files into the container
+COPY . .
+
+# Install common development tools (optional)
+RUN apt-get update && apt-get install -y \
+    git \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install cargo-watch for live-reload during development (optional)
+RUN cargo install cargo-watch
+
+# Default to a bash shell for interactive use
+CMD ["/bin/bash"]
