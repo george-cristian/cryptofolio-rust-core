@@ -1,7 +1,7 @@
 {
   "name": "Cryptofolio Rust Core",
   "build": {
-    "dockerfile": "../Dockerfile.dev",
+    "dockerfile": "../Dockerfile.local",
     "context": "."
   },
   "mounts": [
