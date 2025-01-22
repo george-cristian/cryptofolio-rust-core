@@ -1,0 +1,53 @@
+name: Build and Test Cryptofolio Core
+
+on:
+  push:
+    branches:
+      - master       # Trigger only on push to master
+  pull_request:
+    types:
+      - opened       # Trigger when a PR is opened
+      - synchronize  # Trigger when a PR is updated with new commits
+      - reopened     # Trigger when a previously closed PR is reopened
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Checkout the repository code
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    # Install Rust
+    - name: Set up Rust
+      uses: actions-rs/toolchain@v1
+      with:
+        toolchain: stable
+        components: rustfmt, clippy
+
+    # Check code compilation
+    - name: Cargo Check
+      run: cargo check
+
+    # Check code formatting
+    - name: Check code formatting with cargo fmt
+      run: cargo fmt -- --check
+
+    # Lint code with Clippy
+    - name: Lint code with Clippy
+      run: cargo clippy -- -D warnings
+
+    # Run tests
+    - name: Cargo Test
+      run: cargo test
+
+    # Build the Docker image
+    - name: Build Docker Image
+      run: |
+        docker build -t cryptofolio-rust-core -f Dockerfile .
+
+    # Remove Docker image after build
+    - name: Cleanup Docker Image
+      run: |
+        docker rmi cryptofolio-rust-core --force
