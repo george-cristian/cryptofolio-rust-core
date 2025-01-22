@@ -3,7 +3,12 @@ name: Build and Test Cryptofolio Core
 on:
   push:
     branches:
-      - master
+      - master       # Trigger only on push to master
+  pull_request:
+    types:
+      - opened       # Trigger when a PR is opened
+      - synchronize  # Trigger when a PR is updated with new commits
+      - reopened     # Trigger when a previously closed PR is reopened
 
 jobs:
   build-and-test:
